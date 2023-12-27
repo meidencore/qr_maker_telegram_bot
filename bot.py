@@ -29,9 +29,9 @@ elif mode == 'prod':
         application.run_webhook(
             listen="0.0.0.0",
             port=PORT,
-            #secret_token=TOKEN,
-            webhook_url=f"https://{RENDER_APP_NAME}.onrender.com/"
+            webhook_url=f"https://{RENDER_APP_NAME}.onrender.com"
         )
+        logger.info(f'APP is running on:https://{RENDER_APP_NAME}.onrender.com, Port:{PORT}')
 else: 
     logger.info('no se especifico el mode')
     sys.exit()
@@ -68,3 +68,4 @@ if __name__ == '__main__':
     application.add_handler(echo_handler)
     
     run(application)
+    logger.info('aplication succeful running')
