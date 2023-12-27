@@ -29,7 +29,7 @@ elif mode == 'prod':
         application.run_webhook(
             listen="0.0.0.0",
             port=PORT,
-            secret_token=TOKEN,
+            #secret_token=TOKEN,
             webhook_url=f"https://{RENDER_APP_NAME}.onrender.com/"
         )
 else: 
