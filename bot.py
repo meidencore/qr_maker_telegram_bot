@@ -1,5 +1,6 @@
 import os
 import logging
+import sys
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 import qrcode
@@ -12,7 +13,28 @@ logger = logging.getLogger()
 
 # Solicitar TOKEN
 TOKEN = os.getenv("TOKEN")
+mode = os.getenv("MODE")
 
+if mode == 'dev':
+    # creamos acceso (desarollo)
+    def run(application):
+        application.run_polling()
+
+elif mode == 'prod':
+    # creamos acceso (produccion)
+    def run(application):
+        PORT = int(os.environ.get("PORT", "8443"))
+        RENDER_APP_NAME = os.environ.get('RENDER_APP_NAME')
+        # weebhook check https://api.telegram.org/bot<your_bot_token>/getWebhookInfo
+        application.run_webhook(
+            listen="0.0.0.0",
+            port=PORT,
+            secret_token=TOKEN,
+            webhook_url=f"https://{RENDER_APP_NAME}.onrender.com/"
+        )
+else: 
+    logger.info('no se especifico el mode')
+    sys.exit()
 
 async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     logger.info(f'El usuario {update.effective_user.username} con el '
@@ -45,4 +67,5 @@ if __name__ == '__main__':
     application.add_handler(start_handler)
     application.add_handler(echo_handler)
 
-    application.run_polling()
+
+# https://api.telegram.org/bot<6675999197:AAFOPXugKWnBvpp8MU8_NMzDr8qhyIDhYug>/getWebhookInfo
