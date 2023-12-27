@@ -66,6 +66,5 @@ if __name__ == '__main__':
     # agregamos los handlers
     application.add_handler(start_handler)
     application.add_handler(echo_handler)
-
-
-# https://api.telegram.org/bot<6675999197:AAFOPXugKWnBvpp8MU8_NMzDr8qhyIDhYug>/getWebhookInfo
+    
+    run(application)
