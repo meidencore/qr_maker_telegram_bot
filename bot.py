@@ -26,12 +26,12 @@ elif mode == 'prod':
         PORT = int(os.environ.get("PORT", "8443"))
         RENDER_APP_NAME = os.environ.get('RENDER_APP_NAME')
         # weebhook check https://api.telegram.org/bot<your_bot_token>/getWebhookInfo
+        logger.info(f'APP is running on:https://{RENDER_APP_NAME}.onrender.com, Port:{PORT}')
         application.run_webhook(
             listen="0.0.0.0",
             port=PORT,
             webhook_url=f"https://{RENDER_APP_NAME}.onrender.com"
         )
-        logger.info(f'APP is running on:https://{RENDER_APP_NAME}.onrender.com, Port:{PORT}')
 else: 
     logger.info('no se especifico el mode')
     sys.exit()
@@ -67,5 +67,5 @@ if __name__ == '__main__':
     application.add_handler(start_handler)
     application.add_handler(echo_handler)
     
-    run(application)
     logger.info('aplication succeful running')
+    run(application)
